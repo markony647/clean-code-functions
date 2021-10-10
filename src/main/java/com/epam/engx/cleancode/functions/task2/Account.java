@@ -50,7 +50,7 @@ public abstract class Account implements User {
 
     private Level getLevelByAnswersCount(int reviewAnswersCount) {
         for (Integer threshold : levelMap.keySet()) {
-            if (hasCorrespondingLevel(reviewAnswersCount, threshold)) {
+            if (countMatchesThreshold(reviewAnswersCount, threshold)) {
                 return levelMap.get(threshold);
             }
         }
@@ -58,7 +58,7 @@ public abstract class Account implements User {
         return Level.defaultLevel();
     }
 
-    private boolean hasCorrespondingLevel(int reviewAnswersCount, int threshold) {
+    private boolean countMatchesThreshold(int reviewAnswersCount, int threshold) {
         return reviewAnswersCount >= threshold;
     }
 
