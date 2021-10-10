@@ -9,12 +9,16 @@ public abstract class UserController implements Controller {
     private UserAuthenticatorService userAuthenticator;
 
     public void authenticateUser(String userName, String password) {
+        User user = null;
         try {
-            userAuthenticator.login(userName, password);
+            user = userAuthenticator.login(userName, password);
         } catch (UserNotFoundException e) {
             generateFailLoginResponse();
         }
-        generateSuccessLoginResponse(userName);
+
+        if (user != null) {
+            generateSuccessLoginResponse(userName);
+        }
     }
 
     public void setUserAuthenticator(UserAuthenticatorService userAuthenticator) {

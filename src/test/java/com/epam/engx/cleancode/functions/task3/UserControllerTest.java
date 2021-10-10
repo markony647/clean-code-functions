@@ -7,7 +7,7 @@ public class UserControllerTest {
 
     private final UserControllerMock userController = new UserControllerMock();
 
-    @Test(expected = UserNotFoundException.class)
+    @Test
     public void shouldNotAuthenticateUser() {
         userController.setUserAuthenticator(new FalseUserAuthenticator());
         userController.authenticateUser("admin", "123");

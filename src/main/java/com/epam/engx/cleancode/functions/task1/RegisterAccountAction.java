@@ -30,14 +30,6 @@ public class RegisterAccountAction {
         return addresses;
     }
 
-    public void setAccountManager(AccountManager accountManager) {
-        this.accountManager = accountManager;
-    }
-
-    public void setPasswordChecker(PasswordChecker passwordChecker) {
-        this.passwordChecker = passwordChecker;
-    }
-
     private void validateAccount(Account account) {
         validateName(account.getName());
         validatePassword(account.getPassword());
@@ -66,5 +58,13 @@ public class RegisterAccountAction {
         if (password.length() <= minimumRequiredPasswordLength) {
             throw new TooShortPasswordException();
         }
+    }
+
+    public void setAccountManager(AccountManager accountManager) {
+        this.accountManager = accountManager;
+    }
+
+    public void setPasswordChecker(PasswordChecker passwordChecker) {
+        this.passwordChecker = passwordChecker;
     }
 }

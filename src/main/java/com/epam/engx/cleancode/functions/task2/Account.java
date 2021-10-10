@@ -51,11 +51,15 @@ public abstract class Account implements User {
     private Level getLevelByAnswersCount(int reviewAnswersCount) {
         for (Integer threshold : levelMap.keySet()) {
             if (countMatchesThreshold(reviewAnswersCount, threshold)) {
-                return levelMap.get(threshold);
+                return getLevelFor(threshold);
             }
         }
 
         return Level.defaultLevel();
+    }
+
+    private Level getLevelFor(Integer threshold) {
+        return levelMap.get(threshold);
     }
 
     private boolean countMatchesThreshold(int reviewAnswersCount, int threshold) {
