@@ -1,12 +1,13 @@
 package com.epam.engx.cleancode.functions.task3;
 
+import com.epam.engx.cleancode.functions.task3.exceptions.UserNotFoundException;
 import org.junit.Test;
 
 public class UserControllerTest {
 
     private final UserControllerMock userController = new UserControllerMock();
 
-    @Test
+    @Test(expected = UserNotFoundException.class)
     public void shouldNotAuthenticateUser() {
         userController.setUserAuthenticator(new FalseUserAuthenticator());
         userController.authenticateUser("admin", "123");

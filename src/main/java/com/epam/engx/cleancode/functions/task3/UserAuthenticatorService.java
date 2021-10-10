@@ -1,10 +1,11 @@
 package com.epam.engx.cleancode.functions.task3;
 
+import com.epam.engx.cleancode.functions.task3.exceptions.UserNotFoundException;
 import com.epam.engx.cleancode.functions.task3.thirdpartyjar.SessionManager;
 import com.epam.engx.cleancode.functions.task3.thirdpartyjar.User;
 import com.epam.engx.cleancode.functions.task3.thirdpartyjar.UserService;
 
-public abstract class UserAuthenticator implements UserService {
+public abstract class UserAuthenticatorService implements UserService {
 
     private SessionManager sessionManager;
 
@@ -17,7 +18,7 @@ public abstract class UserAuthenticator implements UserService {
             sessionManager.setCurrentUser(user);
             return user;
         }
-        return null;
+        throw new UserNotFoundException();
     }
 
     public void setSessionManager(SessionManager sessionManager) {

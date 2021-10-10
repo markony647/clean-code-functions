@@ -5,15 +5,29 @@ import java.util.Date;
 
 public class DateUtil {
 
-	public Date changeToMidnight(Date date, boolean up) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
-		calendar.add(Calendar.DATE, up ? 1 : -1);
-		calendar.set(Calendar.HOUR_OF_DAY, 0);
-		calendar.set(Calendar.MINUTE, 0);
-		calendar.set(Calendar.SECOND, 0);
-		calendar.set(Calendar.MILLISECOND, 0);
-		return calendar.getTime();
+	private static final int DAY_START = 0;
+
+	public Date convertToNextMidnight(Date date) {
+		int nextDay = DAY_START + 1;
+		Calendar midnight = convertToMidnight(date);
+		midnight.add(Calendar.DATE, nextDay);
+		return midnight.getTime();
 	}
 
+	public Date convertToPreviousMidnight(Date date) {
+		int previousDay = DAY_START - 1;
+		Calendar midnight = convertToMidnight(date);
+		midnight.add(Calendar.DATE, previousDay);
+		return midnight.getTime();
+	}
+
+	private Calendar convertToMidnight(Date date) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		calendar.set(Calendar.HOUR_OF_DAY, DAY_START);
+		calendar.set(Calendar.MINUTE, DAY_START);
+		calendar.set(Calendar.SECOND, DAY_START);
+		calendar.set(Calendar.MILLISECOND, DAY_START);
+		return calendar;
+	}
 }

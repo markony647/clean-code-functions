@@ -2,7 +2,7 @@ package com.epam.engx.cleancode.functions.task2;
 
 
 import com.epam.engx.cleancode.functions.task2.thirdpartyjar.Level;
-import com.epam.engx.cleancode.functions.task2.thirdpartyjar.NotActivUserException;
+import com.epam.engx.cleancode.functions.task2.thirdpartyjar.NotActiveUserException;
 import com.epam.engx.cleancode.functions.task2.thirdpartyjar.Review;
 import com.epam.engx.cleancode.functions.task2.thirdpartyjar.User;
 
@@ -38,13 +38,13 @@ public abstract class Account implements User {
 
     private void validateIfRegistered() {
         if (!isRegistered()) {
-            throw new NotActivUserException();
+            throw new NotActiveUserException();
         }
     }
 
     private void validateIfHasVisits() {
         if (getVisitNumber() == 0) {
-            throw new NotActivUserException();
+            throw new NotActiveUserException();
         }
     }
 
