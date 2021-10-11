@@ -17,18 +17,14 @@ public class RegisterAccountAction {
     private AccountManager accountManager;
 
     public void register(Account account) {
-        validate(account);
-        initialize(account);
-        create(account);
+        validateAccount(account);
+        initializeAndCreateAccount(account);
     }
 
-    private void create(Account account) {
-        accountManager.createNewAccount(account);
-    }
-
-    private void initialize(Account account) {
+    private void initializeAndCreateAccount(Account account) {
         account.setCreatedDate(new Date());
         account.setAddresses(getAllAssociatedAddresses(account));
+        accountManager.createNewAccount(account);
     }
 
     private List<Address> getAllAssociatedAddresses(Account account) {
@@ -39,7 +35,7 @@ public class RegisterAccountAction {
         return addresses;
     }
 
-    private void validate(Account account) {
+    private void validateAccount(Account account) {
         validateName(account.getName());
         validatePassword(account.getPassword());
     }
@@ -60,12 +56,12 @@ public class RegisterAccountAction {
     }
 
     private void validatePasswordStatus(String password) {
-        if (isNotOk(password)) {
+        if (isPasswordNotOk(password)) {
             throw new WrongPasswordException();
         }
     }
 
-    private boolean isNotOk(String password) {
+    private boolean isPasswordNotOk(String password) {
         return passwordChecker.validate(password) != OK;
     }
 
