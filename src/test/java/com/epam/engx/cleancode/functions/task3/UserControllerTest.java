@@ -1,6 +1,5 @@
 package com.epam.engx.cleancode.functions.task3;
 
-import com.epam.engx.cleancode.functions.task3.exceptions.UserNotFoundException;
 import org.junit.Test;
 
 public class UserControllerTest {

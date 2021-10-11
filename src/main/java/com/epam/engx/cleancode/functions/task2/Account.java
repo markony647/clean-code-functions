@@ -2,7 +2,7 @@ package com.epam.engx.cleancode.functions.task2;
 
 
 import com.epam.engx.cleancode.functions.task2.thirdpartyjar.Level;
-import com.epam.engx.cleancode.functions.task2.thirdpartyjar.NotActiveUserException;
+import com.epam.engx.cleancode.functions.task2.thirdpartyjar.NotActivUserException;
 import com.epam.engx.cleancode.functions.task2.thirdpartyjar.Review;
 import com.epam.engx.cleancode.functions.task2.thirdpartyjar.User;
 
@@ -38,19 +38,19 @@ public abstract class Account implements User {
 
     private void validateIfRegistered() {
         if (!isRegistered()) {
-            throw new NotActiveUserException();
+            throw new NotActivUserException();
         }
     }
 
     private void validateIfHasVisits() {
         if (getVisitNumber() == 0) {
-            throw new NotActiveUserException();
+            throw new NotActivUserException();
         }
     }
 
     private Level getLevelByAnswersCount(int reviewAnswersCount) {
         for (Integer threshold : levelMap.keySet()) {
-            if (countMatchesThreshold(reviewAnswersCount, threshold)) {
+            if (hasMatchingThreshold(reviewAnswersCount, threshold)) {
                 return getLevelFor(threshold);
             }
         }
@@ -62,7 +62,7 @@ public abstract class Account implements User {
         return levelMap.get(threshold);
     }
 
-    private boolean countMatchesThreshold(int reviewAnswersCount, int threshold) {
+    private boolean hasMatchingThreshold(int reviewAnswersCount, int threshold) {
         return reviewAnswersCount >= threshold;
     }
 

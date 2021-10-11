@@ -8,16 +8,18 @@ public class DateUtil {
 	private static final int DAY_START = 0;
 
 	public Date convertToNextMidnight(Date date) {
-		int nextDay = DAY_START + 1;
-		Calendar midnight = convertToMidnight(date);
-		midnight.add(Calendar.DATE, nextDay);
-		return midnight.getTime();
+		int nextDay = 1;
+		return convertToMidnightWithShift(date, nextDay);
 	}
 
 	public Date convertToPreviousMidnight(Date date) {
-		int previousDay = DAY_START - 1;
+		int previousDay = -1;
+		return convertToMidnightWithShift(date, previousDay);
+	}
+
+	private Date convertToMidnightWithShift(Date date, int shift) {
 		Calendar midnight = convertToMidnight(date);
-		midnight.add(Calendar.DATE, previousDay);
+		midnight.add(Calendar.DATE, shift);
 		return midnight.getTime();
 	}
 

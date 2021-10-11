@@ -10,16 +10,25 @@ import static com.epam.engx.cleancode.functions.task1.thirdpartyjar.CheckStatus.
 
 public class RegisterAccountAction {
 
+    private static final int MIN_REQUIRED_NAME_LENGTH = 6;
+    private static final int MIN_REQUIRED_PASSWORD_LENGTH = 9;
+
     private PasswordChecker passwordChecker;
     private AccountManager accountManager;
 
     public void register(Account account) {
-        Date now = new Date();
-        validateAccount(account);
-        account.setCreatedDate(now);
-        account.setAddresses(getAllAssociatedAddresses(account));
+        validate(account);
+        initialize(account);
+        create(account);
+    }
 
+    private void create(Account account) {
         accountManager.createNewAccount(account);
+    }
+
+    private void initialize(Account account) {
+        account.setCreatedDate(new Date());
+        account.setAddresses(getAllAssociatedAddresses(account));
     }
 
     private List<Address> getAllAssociatedAddresses(Account account) {
@@ -30,16 +39,19 @@ public class RegisterAccountAction {
         return addresses;
     }
 
-    private void validateAccount(Account account) {
+    private void validate(Account account) {
         validateName(account.getName());
         validatePassword(account.getPassword());
     }
 
     private void validateName(String name) {
-        int minimumRequiredNameLength = 5;
-        if (name.length() <= minimumRequiredNameLength) {
+        if (hasValidName(name)) {
             throw new WrongAccountNameException();
         }
+    }
+
+    private boolean hasValidName(String name) {
+        return name.length() < MIN_REQUIRED_NAME_LENGTH;
     }
 
     private void validatePassword(String password) {
@@ -48,16 +60,23 @@ public class RegisterAccountAction {
     }
 
     private void validatePasswordStatus(String password) {
-        if (passwordChecker.validate(password) != OK) {
+        if (isNotOk(password)) {
             throw new WrongPasswordException();
         }
     }
 
+    private boolean isNotOk(String password) {
+        return passwordChecker.validate(password) != OK;
+    }
+
     private void validatePasswordLength(String password) {
-        int minimumRequiredPasswordLength = 8;
-        if (password.length() <= minimumRequiredPasswordLength) {
+        if (hasNotAcceptedLength(password)) {
             throw new TooShortPasswordException();
         }
+    }
+
+    private boolean hasNotAcceptedLength(String password) {
+        return password.length() < MIN_REQUIRED_PASSWORD_LENGTH;
     }
 
     public void setAccountManager(AccountManager accountManager) {
