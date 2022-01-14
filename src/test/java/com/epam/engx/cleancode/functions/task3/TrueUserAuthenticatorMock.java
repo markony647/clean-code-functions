@@ -4,7 +4,7 @@ import com.epam.engx.cleancode.functions.task3.thirdpartyjar.SessionManager;
 import com.epam.engx.cleancode.functions.task3.thirdpartyjar.User;
 import org.junit.Assert;
 
-public class TrueUserAuthenticatorMock extends UserAuthenticator {
+public class TrueUserAuthenticatorMock extends UserAuthenticatorService {
 
     private final User user = new User() {};
     private  User sessionUser;

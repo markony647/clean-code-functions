@@ -5,10 +5,10 @@ import java.util.Date;
 public class DateUtilTestHelper {
 
     public static Date getDirectlyIncrementedDate(DateUtil dateUtil, Date date) {
-        return dateUtil.changeToMidnight(date, true);
+        return dateUtil.convertToNextMidnight(date);
     }
 
     public static Date getInverseIncrementedDate(DateUtil dateUtil, Date date) {
-        return dateUtil.changeToMidnight(date, false);
+        return dateUtil.convertToPreviousMidnight(date);
     }
 }

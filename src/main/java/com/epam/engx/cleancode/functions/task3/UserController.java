@@ -1,21 +1,22 @@
 package com.epam.engx.cleancode.functions.task3;
 
+import com.epam.engx.cleancode.functions.task3.exceptions.WrongPasswordException;
 import com.epam.engx.cleancode.functions.task3.thirdpartyjar.Controller;
-import com.epam.engx.cleancode.functions.task3.thirdpartyjar.User;
 
 public abstract class UserController implements Controller {
 
-    private UserAuthenticator userAuthenticator;
+    private UserAuthenticatorService userAuthenticator;
 
     public void authenticateUser(String userName, String password) {
-        User user = userAuthenticator.login(userName, password);
-        if (user == null)
-            generateFailLoginResponse();
-        else
+        try {
+            userAuthenticator.login(userName, password);
             generateSuccessLoginResponse(userName);
+        } catch (WrongPasswordException e) {
+            generateFailLoginResponse();
+        }
     }
 
-    public void setUserAuthenticator(UserAuthenticator userAuthenticator) {
+    public void setUserAuthenticator(UserAuthenticatorService userAuthenticator) {
         this.userAuthenticator = userAuthenticator;
     }
 }

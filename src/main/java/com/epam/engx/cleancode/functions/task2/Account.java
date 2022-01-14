@@ -6,6 +6,7 @@ import com.epam.engx.cleancode.functions.task2.thirdpartyjar.NotActivUserExcepti
 import com.epam.engx.cleancode.functions.task2.thirdpartyjar.Review;
 import com.epam.engx.cleancode.functions.task2.thirdpartyjar.User;
 
+import java.util.List;
 import java.util.TreeMap;
 
 public abstract class Account implements User {
@@ -14,27 +15,55 @@ public abstract class Account implements User {
 
     public Level getActivityLevel() {
         validateAccountForLevel();
+        int answersCount = countAllAnswers(getAllReviews());
+        return getLevelByAnswersCount(answersCount);
+    }
 
-        int reviewAnswers = 0;
-        for (Review r : getAllReviews())
-            reviewAnswers += r.getAnswers().size();
+    private int countAllAnswers(List<Review> reviews) {
+        int answersCount = 0;
+        for (Review currentReview : reviews) {
+            answersCount += countAnswers(currentReview);
+        }
+        return answersCount;
+    }
 
-        return getLevelByReviews(reviewAnswers);
-
+    private int countAnswers(Review review) {
+        return review.getAnswers().size();
     }
 
     private void validateAccountForLevel() {
-        if (!isRegistered() || getVisitNumber() <= 0)
-            throw new NotActivUserException();
+        validateIfRegistered();
+        validateIfHasVisits();
     }
 
-    private Level getLevelByReviews(int reviewAnswers) {
+    private void validateIfRegistered() {
+        if (!isRegistered()) {
+            throw new NotActivUserException();
+        }
+    }
+
+    private void validateIfHasVisits() {
+        if (getVisitNumber() == 0) {
+            throw new NotActivUserException();
+        }
+    }
+
+    private Level getLevelByAnswersCount(int reviewAnswersCount) {
         for (Integer threshold : levelMap.keySet()) {
-            if (reviewAnswers >= threshold)
-                return levelMap.get(threshold);
+            if (hasMatchingThreshold(reviewAnswersCount, threshold)) {
+                return getLevelFor(threshold);
+            }
         }
 
         return Level.defaultLevel();
+    }
+
+    private Level getLevelFor(Integer threshold) {
+        return levelMap.get(threshold);
+    }
+
+    private boolean hasMatchingThreshold(int reviewAnswersCount, int threshold) {
+        return reviewAnswersCount >= threshold;
     }
 
     public void setLevelMap(TreeMap<Integer, Level> levelMap) {
